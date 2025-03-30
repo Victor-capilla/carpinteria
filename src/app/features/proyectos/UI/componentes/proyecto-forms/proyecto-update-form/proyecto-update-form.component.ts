@@ -20,11 +20,11 @@ import { ProyectoEntity } from '../../../../domain/proyecto-entity';
 import { ModuloEntity } from '../../../../../modulos/domain/modulo-entity';
 import { Modulo } from '../../../../../modulos/domain/modulo';
 import { TipoModulo } from '../../../../../modulos/domain/tipo-modulo';
-import { ModuleTypeForm } from '../proyecto-create-form/proyecto-create-form.component';
 import { GetAllTipoModuloUseCase } from '../../../../../modulos/aplication/get-all-tipo-modulo.usecase';
-import { ProyectoFormConfig } from '../proyecto-create-form/proyecto-form.config';
-import { ModuleFactoryUseCase } from '../../../../../modulos/aplication/map-creation-modules.usecase';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ModuleTypeForm } from '../../../../../modulos/domain/modulo-type-form';
+import { ProyectoFormConfig } from '../proyecto-form.config';
+import { ModuleFactoryUseCase } from '../../../../../modulos/aplication/module-factory.usecase';
 
 @Component({
   selector: 'app-proyecto-update-form',
@@ -55,7 +55,6 @@ export class ProyectoUpdateFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tipos$ = this.getAllTipoModuloUseCase.execute().pipe(takeUntilDestroyed(this.destroyRef));
     this.initFormulario();
-   
   }
 
   ngOnDestroy(): void {
@@ -98,35 +97,28 @@ export class ProyectoUpdateFormComponent implements OnInit, OnDestroy {
       const modulos = this.proyectoForm.value['modulos'] as ModuleTypeForm[];
       return modulos.map((modulo) => this.moduleFactoryUseCase.execute().get(modulo.tipo.tipo)?.(modulo)) as Modulo[];
     }
-  
-    
-    private createModuleForm(modulo?: ModuloEntity): FormGroup {
-      // Form principal del módulo
-      const moduleForm = this.fb.group({
-        tipo: [modulo ? modulo.tipo : null, Validators.required],
-        datos: modulo ? ProyectoFormConfig.getConfigFormByModule(modulo.tipo.tipo, this.fb , modulo): this.fb.group({}) // vacío al inicio
+
+  private createModuleForm(modulo?: ModuloEntity): FormGroup {
+    const moduleForm = this.fb.group({
+      tipo: [modulo ? modulo.tipo : null, Validators.required],
+      datos: modulo ? ProyectoFormConfig.getConfigFormByModule(modulo.tipo.tipo, this.fb , modulo): this.fb.group({}) // vacío al inicio
+    });
+    moduleForm.get('tipo')?.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((tipoSeleccionado : TipoModulo | null) => {
+          if (tipoSeleccionado) {
+            const subForm = ProyectoFormConfig.getConfigFormByModule(tipoSeleccionado.tipo, this.fb , modulo)
+            moduleForm.setControl('datos', subForm);
+            moduleForm.updateValueAndValidity({ emitEvent: false });
+          }
       });
-            // Suscribirse a los cambios de "tipo" para reemplazar el subform
-      moduleForm.get('tipo')?.valueChanges
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((tipoSeleccionado : TipoModulo | null) => {
-          // Creamos un subform según el tipo
-            if (tipoSeleccionado) {
-              const subForm = ProyectoFormConfig.getConfigFormByModule(tipoSeleccionado.tipo, this.fb , modulo)
-              moduleForm.setControl('datos', subForm);
-              moduleForm.updateValueAndValidity({ emitEvent: false });
-            }
-        });
-    
-      // Esto, si quieres, suscribe a statusChanges para tu “statusForm”
-      moduleForm.statusChanges
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          this.statusForm.set(this.formularioInvalido());
-        });
-    
-      return moduleForm;
-    }
+    moduleForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.statusForm.set(this.formularioInvalido());
+      });
+    return moduleForm;
+  }
 
   get modulos(): FormArray {
     return this.proyectoForm.get('modulos') as FormArray;

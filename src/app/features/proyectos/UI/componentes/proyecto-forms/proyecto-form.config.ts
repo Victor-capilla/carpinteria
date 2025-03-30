@@ -1,12 +1,11 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { TipoModuloEnum } from "../../../../../modulos/domain/tipo-modulo.enum";
-import { ANCHURA_MIN_ENCIMERA, MAX_PUERTAS, MIN_PUERTAS } from "../../../../../modulos/encimera/domain/encimera";
-import { ANCHURA_MIN_ESTANTERIA, MAX_ESTANTE, MIN_ESTANTE } from "../../../../../modulos/estanteria/domain/estanteria";
-import { ModuloEntity } from "../../../../../modulos/domain/modulo-entity";
+import { ModuloEntity } from "../../../../modulos/domain/modulo-entity";
+import { TipoModuloEnum } from "../../../../modulos/domain/tipo-modulo.enum";
+import { ANCHURA_MIN_ENCIMERA, MIN_PUERTAS, MAX_PUERTAS } from "../../../../modulos/encimera/domain/encimera";
+import { ANCHURA_MIN_ESTANTERIA, MIN_ESTANTE, MAX_ESTANTE } from "../../../../modulos/estanteria/domain/estanteria";
 
 export class ProyectoFormConfig {
-  
-  
+
   static getConfigFormByModule(tipo: TipoModuloEnum  | null, fb : FormBuilder , modulo?: ModuloEntity): FormGroup {
     function getPuertas(modulo?: ModuloEntity): 1 | 2 {
       return (modulo?.piezas.filter((p) => p.descripcion === 'Puerta').length as 1 | 2) || 1;

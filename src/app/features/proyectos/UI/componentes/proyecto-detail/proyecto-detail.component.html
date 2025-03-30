@@ -24,7 +24,7 @@
                   <h4>Despieze</h4>
                   <ul class="list-none p-0 m-0">
                     <li *ngFor="let grupo of despiezeModulo.piezas;">
-                      {{ grupo.tipo }} : ({{ grupo.piezas.length }}) {{  grupo.piezas?.[0]?.identificacion?.()}}
+                      {{ grupo.tipo }} :  ({{ grupo.piezas.length }}) {{ grupo.piezas && grupo.piezas.length ? grupo.piezas[0].identificacion() :''}}
                     </li>
                   </ul>
               </p-accordion-content>

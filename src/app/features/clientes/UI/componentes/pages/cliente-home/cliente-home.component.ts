@@ -68,7 +68,6 @@ export class ClienteHomeComponent implements OnInit{
 
   private getClientes(){
     this.getAllClienteUseCase.execute().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((clientesEntity :ClienteEntity[])=> {
-      console.log(clientesEntity);
       this.clientes.set(clientesEntity);
     })
   }

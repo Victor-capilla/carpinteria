@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { TipoModuloEnum } from "../domain/tipo-modulo.enum";
 import { Modulo } from "../domain/modulo";
-import { ModuleTypeForm } from "../../proyectos/UI/componentes/proyecto-forms/proyecto-create-form/proyecto-create-form.component";
 import { AddPiezasEncimeraUseCase } from "../encimera/aplication/add-piezas-encimera.usecase";
 import { AddPiezasEstanteriaUseCase } from "../estanteria/aplication/add-piezas-estanteria.usecase";
 import { Encimera } from "../encimera/domain/encimera";
 import { Estanteria } from "../estanteria/domain/estanteria";
+import { ModuleTypeForm } from "../domain/modulo-type-form";
 
 @Injectable()
 export class ModuleFactoryUseCase{

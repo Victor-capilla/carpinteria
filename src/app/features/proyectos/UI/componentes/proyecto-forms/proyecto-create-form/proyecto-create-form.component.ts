@@ -10,19 +10,11 @@ import { TipoModulo } from '../../../../../modulos/domain/tipo-modulo';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { GetAllClienteUseCase } from '../../../../../clientes/aplication/get-all-cliente.usecase';
 import { GetAllTipoModuloUseCase } from '../../../../../modulos/aplication/get-all-tipo-modulo.usecase';
-import { ModuleFactoryUseCase } from '../../../../../modulos/aplication/map-creation-modules.usecase';
-import { ProyectoFormConfig } from './proyecto-form.config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ModuleTypeForm } from '../../../../../modulos/domain/modulo-type-form';
+import { ProyectoFormConfig } from '../proyecto-form.config';
+import { ModuleFactoryUseCase } from '../../../../../modulos/aplication/module-factory.usecase';
 
-export type ModuleTypeForm = {
-  tipo: TipoModulo;
-  datos : {
-    anchura:number;
-    puertas: 1 | 2;
-    estantes: 2 | 3 | 4 | 5;
-  }
-  
-};
 
 @Component({
   selector: 'app-proyecto-create-form',
@@ -105,27 +97,23 @@ export class ProyectoCreateFormComponent implements OnInit, OnDestroy {
 
   
   private createModuleForm(): FormGroup {
-    // Form principal del módulo
+
     const moduleForm = this.fb.group({
       tipo: [null, Validators.required],
-      datos: this.fb.group({}) // vacío al inicio
+      datos: this.fb.group({})
     });
-  
-    // Suscribirse a los cambios de "tipo" para reemplazar el subform
     moduleForm.get('tipo')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((tipoSeleccionado : TipoModulo | null) => {
-        // Creamos un subform según el tipo
+
           if (tipoSeleccionado) {
             const subForm = ProyectoFormConfig.getConfigFormByModule(tipoSeleccionado.tipo, this.fb)
             moduleForm.setControl('datos', subForm);
             moduleForm.updateValueAndValidity({ emitEvent: false });
           }
-          
 
       });
   
-    // Esto, si quieres, suscribe a statusChanges para tu “statusForm”
     moduleForm.statusChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {

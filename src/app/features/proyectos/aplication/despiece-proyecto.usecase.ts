@@ -6,7 +6,6 @@ export class DespiezeProyectoUseCase{
   constructor() {}
     execute: (proyecto : ProyectoEntity) => [string, number][] = (proyecto : ProyectoEntity)=>{
       const mapPiezas = new Map<string, number>();
-      // Aplana todas las piezas en un solo array
       proyecto.modulos
         .flatMap(modulo => modulo.piezas)
         .forEach(pieza => {

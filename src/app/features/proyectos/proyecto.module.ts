@@ -41,7 +41,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
 import { ProyectosResolver } from './resolvers/proyecto.resolver';
 import { ModuloDescripcionPipe } from '../modulos/UI/pipes/modulo-descripcion.pipe';
-import { ModuleFactoryUseCase } from '../modulos/aplication/map-creation-modules.usecase';
+import { ModuleFactoryUseCase } from '../modulos/aplication/module-factory.usecase';
 ;
 @NgModule({
   imports: [

@@ -35,8 +35,8 @@ export class ProyectoRepositoryLocal implements ProyectoRepository{
         {id: 1 , altura: 90 , anchura: 30 ,fondo : 45 , nombre: 'estanteria' ,tipo : { tipo : TipoModuloEnum.ESTANTERIA}, piezas : this.piezasEstanteria}
     ];
     proyectos : ProyectoEntity[] = [
-        {id:1, nombre : 'Pedro Proyecto' , modulos: [this.modulos[0]], idCliente:1, descripcion: ''},
-        {id:2, nombre : 'Manolo Proyecto' , modulos: [this.modulos[1]], idCliente:2 , descripcion: ''},
+        {id:1, nombre : 'Cocina Casa Paco' , modulos: [this.modulos[0]], idCliente:1, descripcion: ''},
+        {id:2, nombre : 'Salon Monolo' , modulos: [this.modulos[1]], idCliente:2 , descripcion: ''},
     ];
     setModules: (id: number, modulo: Modulo[]) => Observable<void> = (id: number, modulo: Modulo[]) => {
         const proyectFind = this.proyectos.find(proyecto => proyecto.id === id);
@@ -62,7 +62,7 @@ export class ProyectoRepositoryLocal implements ProyectoRepository{
         if (proyectoFind) {
             GestionObjeto.deepAssign(proyectoFind ,proyecto)
         }
-        return of();
+        return of(void 0);
     };
     create: (proyecto: ProyectoEntity) => Observable<ProyectoEntity>= (proyecto: ProyectoEntity) =>{
         const maxId = Math.max(...this.proyectos.map(p => p.id));
@@ -72,6 +72,6 @@ export class ProyectoRepositoryLocal implements ProyectoRepository{
     };
     delete: (id: number) => Observable<void>= (id: number) =>{
         this.proyectos = this.proyectos.filter(proyecto => proyecto.id !==id);
-        return of();
+        return of(void 0);
     };
 }

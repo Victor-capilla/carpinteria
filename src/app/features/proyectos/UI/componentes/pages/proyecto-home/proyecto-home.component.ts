@@ -28,7 +28,6 @@ export class ProyectoHomeComponent implements OnInit{
   proyectoFilter!: ProyectoFilter;
   idCliente!:number | undefined;
   cliente = signal<ClienteEntity | undefined>(undefined);
-  // formUpdate : Formgrou
   constructor(
     private getAllProyectoUseCase : GetAllProyectoUseCase,
     private deleteProyectoUseCase: DeleteProyectoUseCase,
@@ -107,7 +106,6 @@ export class ProyectoHomeComponent implements OnInit{
       });
       this.getProyectos();
     }
-      
     );
   }
 

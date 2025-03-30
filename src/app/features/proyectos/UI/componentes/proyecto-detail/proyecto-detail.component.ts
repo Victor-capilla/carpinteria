@@ -18,19 +18,15 @@ import { DespieceModulo } from '../../../../modulos/domain/despiece-modulo';
   standalone: false,
 })
 export class ProyectoDetailComponent implements OnInit {
-  // Inputs / Outputs
+
   proyecto = input<ProyectoEntity>();
   idCliente = input<number>();
   action = output<{ action: 'update' | 'delete'; proyecto: ProyectoEntity | undefined }>();
 
-  // Signals
   cliente = signal<ClienteEntity | undefined>(undefined);
   despieceProyecto = signal<[string, number][]>([]);
   despieceModulo= signal<DespieceModulo[]>([]);
 
- 
-
-  // UI
   botones: MenuItem[] = [];
 
   constructor(
@@ -39,7 +35,7 @@ export class ProyectoDetailComponent implements OnInit {
     private despiezeProyectoUseCase: DespiezeProyectoUseCase,
     private destroyRef : DestroyRef
   ) {
-    // Reacción al cambio de proyecto (desde el padre)
+
     toObservable(this.proyecto).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((proyecto) => {
       if (proyecto) {
         this.loadCliente();
@@ -94,5 +90,5 @@ export class ProyectoDetailComponent implements OnInit {
       this.despieceProyecto.set(this.despiezeProyectoUseCase.execute(proyecto));
     }
   }
- 
+
 }
