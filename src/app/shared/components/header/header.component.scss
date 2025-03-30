@@ -1,0 +1,37 @@
+#container-content{
+
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    #container-logo{
+
+        width: 10%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img{
+            height: 100%;
+            border-radius: 100%;
+            padding: 5px;
+            border: 6px;
+        }
+    }
+    #container-icons{
+
+        width: 90%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 50px;
+        gap: 20px;
+
+        i{
+            transform: scale(1.5);
+        }
+    }
+}

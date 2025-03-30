@@ -1,0 +1,102 @@
+import { TipoModulo } from "./tipo-modulo";
+
+export type ModuleTypeForm = {
+    tipo: TipoModulo;
+    datos : {
+        anchura:number;
+        puertas: 1 | 2;
+        estantes: 2 | 3 | 4 | 5;
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

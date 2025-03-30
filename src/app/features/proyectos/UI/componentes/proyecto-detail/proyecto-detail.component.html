@@ -1,0 +1,50 @@
+<div id="container-proyecto">
+  <p-card [header]="proyecto()?.nombre">
+    <p-speeddial
+    [model]="botones"
+    direction="down"
+    [style]="{ position: 'absolute', right: 0, top: 0  }"
+    [className]="'custom-speed-action'"
+    [showIcon]="'pi pi-plus'"
+    [hideIcon]="'pi pi-times'"
+    [buttonStyle]="{ transform: 'scale(.7)'}"/>
+    <p>
+     {{ proyecto()?.descripcion}}
+    </p>
+    <div class="cliente" *ngIf="!idCliente()">
+      Cliente : {{cliente()?.nombre}}
+    </div>
+    <p-accordion [multiple]="false">
+      <p-card header="Modulos">
+        <p-accordion [multiple]="true">
+          <ng-container *ngFor="let despiezeModulo of despieceModulo()">
+            <p-accordion-panel [value]="despiezeModulo.modulo.nombre">
+              <p-accordion-header>{{despiezeModulo.modulo | moduloDescripcion | titlecase}}</p-accordion-header>
+              <p-accordion-content>
+                  <h4>Despieze</h4>
+                  <ul class="list-none p-0 m-0">
+                    <li *ngFor="let grupo of despiezeModulo.piezas;">
+                      {{ grupo.tipo }} : ({{ grupo.piezas.length }}) {{  grupo.piezas?.[0]?.identificacion?.()}}
+                    </li>
+                  </ul>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </ng-container>
+        </p-accordion>
+      </p-card>
+    <p-accordion-panel value="Despieze Total" id="despieze">
+      <p-accordion-header>Despieze Total</p-accordion-header>
+      <p-accordion-content>
+          <h4>Despieze</h4>
+          <ul class="list-none p-0 m-0">
+            <li *ngFor="let entrada of despieceProyecto()">
+              {{ entrada[0] }}: {{ entrada[1] }}
+            </li>
+          </ul>
+      </p-accordion-content>
+    </p-accordion-panel>
+    </p-accordion>
+  </p-card>
+</div>
+
+

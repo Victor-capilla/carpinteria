@@ -1,0 +1,67 @@
+<div  *ngIf="proyectoForm" [formGroup]="proyectoForm">
+  <!-- Nombre -->
+
+  <div class="field">
+    <p-floatlabel variant="on">
+      <input id="nombre" type="text" pInputText formControlName="nombre" autocomplete="off" />
+      <label for="nombre">Nombre</label>
+    </p-floatlabel>
+  </div>
+
+  <div class="field">
+    <p-floatlabel variant="on">
+      <label for="description">Description</label>
+      <input id="description" type="text" pInputText formControlName="description" autocomplete="off" />
+    </p-floatlabel>
+  </div>
+
+  <div class="field" *ngIf="!this.idCliente">
+    <p-float-label  variant="on">
+     <p-select id="cliente" appendTo="body" [options]="(this.clientes$ |async) || []" optionLabel="nombre" formControlName="cliente" />
+     <label for="cliente">Cliente</label>
+    </p-float-label>
+  </div>
+
+  <button  pButton type="button" label="Añadir Modulo"  (click)="addModulo()"></button>
+  <div formArrayName="modulos">
+    <div *ngFor="let modulo of modulos.controls; let i = index" [formGroupName]="i" id="moduloForm">
+      
+        <div class="field">
+          <p-float-label  variant="on">
+            <p-select id="tipo" appendTo="body"  [options]="(this.tipos$ |async) || []" optionLabel="tipo" formControlName="tipo" />
+            <label for="tipo">Modulo</label>
+          </p-float-label>
+        </div>
+        <div formGroupName="datos" *ngIf="modulo.get('tipo')?.value">
+          <div class="field" *ngIf="modulo.get('datos')?.get('anchura')">
+            <p-float-label  variant="on">
+              <p-inputnumber id="anchura"  formControlName="anchura" />
+              <label for="anchura">Anchura</label>
+            </p-float-label>
+          </div>
+
+          <div class="field" *ngIf="modulo.get('tipo')?.value?.tipo === 'encimera' && modulo.get('datos')?.get('puertas')">
+            <p-float-label  variant="on">
+              <p-inputnumber id="puertas"  formControlName="puertas" />
+              <label for="puertas">Puertas</label>
+            </p-float-label>
+          </div>
+
+          <div class="field"  *ngIf="modulo.get('tipo')?.value?.tipo === 'estanteria'&& modulo.get('datos')?.get('estantes')">
+            <p-float-label  variant="on">
+              <p-inputnumber id="estantes"  formControlName="estantes" />
+              <label for="estantes">Estantes</label>
+            </p-float-label>
+          </div>
+        </div>
+        <button pButton type="button" label="Quitar Modulo" icon="pi pi-times" severity="danger" (click)="deleteModulo(i)"></button>
+    </div>
+
+  </div>
+
+  <!-- Guardar -->
+  <div class="buttons">
+    <button pButton type="button" label="Cancelar" icon="pi pi-times" severity="danger" (click)="close()"></button>
+    <button [disabled]="this.disabledForm()" pButton type="button" label="Guardar" icon="pi pi-save" (click)="submit()"></button>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div id="container-cliente">
+  <p-speeddial 
+  [model]="botones" 
+  direction="down"
+  [style]="{ position: 'absolute', right: 0, top: 0  }" 
+  [className]="'custom-speed-action'"
+  [showIcon]="'pi pi-plus'"
+  [hideIcon]="'pi pi-times'"
+  [buttonStyle]="{ transform: 'scale(.7)'}"/>
+  <img src="\assets\logo\carpinteria.png" alt="">
+  <div id="container-cliente__nombre">{{ cliente()?.nombre }}</div>
+  <div id="container-cliente__descripcion">{{ cliente()?.description }}</div>
+</div>

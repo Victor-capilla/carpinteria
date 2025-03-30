@@ -1,0 +1,33 @@
+<div class="mb-3">
+  <p-autoComplete
+  [ngModel]="filtro()"
+  (ngModelChange)="filtro.set($event)"
+  [suggestions]="filteredOptions()"
+  (completeMethod)="onAutocompleteChange($event.query)"
+  placeholder="Filtrar elementos"
+  class="w-full"
+/>
+</div>
+
+<p-table
+  [value]="filteredData()"
+  [paginator]="true"
+  [rows]="10"
+  responsiveLayout="scroll"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let col of headers()">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      <td *ngFor="let col of headers()">
+        {{ row[col.field] }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

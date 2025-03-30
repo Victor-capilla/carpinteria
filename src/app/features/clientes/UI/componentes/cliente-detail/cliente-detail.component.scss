@@ -1,0 +1,40 @@
+#container-cliente{
+    width: 20vw;
+    height: 20vw;
+    display: flex;
+    margin: 10px;
+    position: relative;
+    box-shadow: 6px 5px 7px 0px rgb(105 105 105 / 25%);
+    border-radius: 10%;
+    color: #dbd1b5;
+    
+    img{
+        width: 100%;
+        position: relative;
+        border-radius: 10%;
+    }
+
+    &__nombre{
+        position: absolute;
+        top: 10%;
+        font-size: 40px;
+        width: 100%;
+        font-weight: bold;
+        text-align: center;
+    }
+    &__descripcion{
+
+        position: absolute;
+        width: 100%;
+        bottom: 10%;
+        left: 50%;
+        font-size: 20px;
+        font-weight: bold;
+        transform: translateX(-50%);
+        text-align: center;
+
+    }
+}
+.custom-speed-action .p-speeddial-open .p-speeddial-item{
+    transform: scale(.5);
+}
